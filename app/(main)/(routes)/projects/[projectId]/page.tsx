@@ -1,7 +1,7 @@
 import { ActionTooltip } from "@/components/action-tooltip";
 
 const ProjectPage = () => {
-  return <></>;
+  return <>123</>;
 };
 
 export default ProjectPage;
