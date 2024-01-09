@@ -2,11 +2,12 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
+import InitialModal from "@/components/modals/initial-modal";
 
 const SetupPage = async () => {
   const profile = await initialProfile();
 
-  const server = await db.server.findFirst({
+  const project = await db.project.findFirst({
     where: {
       members: {
         some: {
@@ -16,11 +17,11 @@ const SetupPage = async () => {
     },
   });
 
-  if (server) {
-    return redirect(`/servers/${server.id}`);
+  if (project) {
+    return redirect(`/projects/${project.id}`);
   }
 
-  return <>123</>;
+  return <InitialModal></InitialModal>;
 };
 
 export default SetupPage;
