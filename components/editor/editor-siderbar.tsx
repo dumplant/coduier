@@ -13,7 +13,7 @@ type EditorItemProps = {
   key: EditorItemKeys;
   name: string;
   icon: LucideIcon;
-  panel: () => JSX.Element;
+  panel: JSX.Element;
 };
 
 const EditorSidebar = () => {
@@ -23,19 +23,19 @@ const EditorSidebar = () => {
       key: "LLM",
       name: "大模型生成",
       icon: BrainCircuit,
-      panel: LLMPanel,
+      panel: LLMPanel(),
     },
     {
       key: "component",
       name: "组件",
       icon: Component,
-      panel: ComponentPanel,
+      panel: ComponentPanel(),
     },
     {
       key: "code",
       name: "代码",
       icon: Code,
-      panel: CodePanel,
+      panel: CodePanel(),
     },
   ];
 
@@ -70,8 +70,8 @@ const EditorSidebar = () => {
           </div>
         ))}
       </div>
-      <div className="flex flex-col bg-zinc-300">
-        {EditorItems.find((v) => v.key === selectedItemKey)?.panel()}
+      <div className="w-[280px] flex flex-col bg-zinc-300">
+        {EditorItems.find((v) => v.key === selectedItemKey)?.panel}
       </div>
     </div>
   );
