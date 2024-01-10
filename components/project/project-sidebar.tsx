@@ -2,6 +2,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import ProjectHeader from "./project-header";
+import { ProjectPage } from "./project-page";
 
 interface ServerSidebarProps {
   projectId: string;
@@ -17,7 +18,7 @@ const ProjectSidebar = async ({ projectId }: ServerSidebarProps) => {
       id: projectId,
     },
     include: {
-      channels: {
+      pages: {
         orderBy: {
           createdAt: "asc",
         },
@@ -48,6 +49,18 @@ const ProjectSidebar = async ({ projectId }: ServerSidebarProps) => {
   return (
     <div className="flex flex-col h-full text-primary w-full bg-[#F2F3F5]">
       <ProjectHeader project={project} role={role} />
+      {project.pages.length > 0 && (
+        <div className="space-y-[2px]">
+          {project.pages.map((page) => (
+            <ProjectPage
+              key={page.id}
+              project={project}
+              role={role}
+              page={page}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

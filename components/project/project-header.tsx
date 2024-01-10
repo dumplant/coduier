@@ -68,7 +68,7 @@ const ProjectHeader = ({ project, role }: ProjectHeaderProps) => {
         )}
         {isModerator && (
           <DropdownMenuItem
-            onClick={() => onOpen("createChannel")}
+            onClick={() => onOpen("createPage")}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             创建页面

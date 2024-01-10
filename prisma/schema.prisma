@@ -17,7 +17,7 @@ model Profile {
 
   projects Project[]
   members  Member[]
-  channels Channel[]
+  pages    Page[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -32,8 +32,8 @@ model Project {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  members  Member[]
-  channels Channel[]
+  members Member[]
+  pages   Page[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,16 +70,9 @@ model Member {
   @@index([projectId])
 }
 
-enum ChannelType {
-  TEXT
-  AUDIO
-  VIDEO
-}
-
-model Channel {
-  id   String      @id @default(uuid())
+model Page {
+  id   String @id @default(uuid())
   name String
-  type ChannelType @default(TEXT)
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -105,15 +98,15 @@ model Message {
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  pageId String
+  page   Page   @relation(fields: [pageId], references: [id], onDelete: Cascade)
 
   deleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([channelId])
+  @@index([pageId])
   @@index([memberId])
 }
 
