@@ -17,7 +17,7 @@ const ProjectIdLayout = async ({
     return redirectToSignIn();
   }
 
-  const server = await db.project.findUnique({
+  const project = await db.project.findUnique({
     where: {
       id: params.projectId,
       members: {
@@ -28,7 +28,7 @@ const ProjectIdLayout = async ({
     },
   });
 
-  if (!server) {
+  if (!project) {
     return redirect("/");
   }
   return (

@@ -93,6 +93,8 @@ model Message {
   id      String @id @default(uuid())
   content String @db.Text
 
+  response String @db.Text
+
   fileUrl String? @db.Text
 
   memberId String

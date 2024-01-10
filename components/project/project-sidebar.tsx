@@ -2,7 +2,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import ProjectHeader from "./project-header";
-import { ProjectPage } from "./project-page";
+import { ProjectPageItem } from "./project-page-item";
 
 interface ServerSidebarProps {
   projectId: string;
@@ -52,7 +52,7 @@ const ProjectSidebar = async ({ projectId }: ServerSidebarProps) => {
       {project.pages.length > 0 && (
         <div className="space-y-[2px]">
           {project.pages.map((page) => (
-            <ProjectPage
+            <ProjectPageItem
               key={page.id}
               project={project}
               role={role}

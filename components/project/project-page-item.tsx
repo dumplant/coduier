@@ -14,7 +14,7 @@ interface ProjectPageProps {
   role?: MemberRole;
 }
 
-export const ProjectPage = ({ page, project, role }: ProjectPageProps) => {
+export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
   const { onOpen } = useModal();
   const params = useParams();
   const router = useRouter();
@@ -45,11 +45,16 @@ export const ProjectPage = ({ page, project, role }: ProjectPageProps) => {
       >
         {page.name}
       </p>
-      {page.name !== "general" && role !== MemberRole.GUEST && (
+      {role !== MemberRole.GUEST && (
         <div className="ml-auto flex items-center gap-x-2">
           <ActionTooltip label="Edit">
             <Edit
-              onClick={(e) => onAction(e, "editChannel")}
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(
+                  `/edit/projects/${params?.projectId}/pages/${page.id}`
+                );
+              }}
               className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>
@@ -60,9 +65,6 @@ export const ProjectPage = ({ page, project, role }: ProjectPageProps) => {
             />
           </ActionTooltip>
         </div>
-      )}
-      {page.name === "general" && (
-        <Lock className="ml-auto w-4 h-4 text-zinc-500 dark:text-zinc-400" />
       )}
     </button>
   );
