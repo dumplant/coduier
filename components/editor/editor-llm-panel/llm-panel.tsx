@@ -7,31 +7,36 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useParams } from "next/navigation";
 import { currentProfile } from "@/lib/current-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { systemPrompt } from "@/prompt/code-gen";
 
 const LLMPanel = () => {
   const params = useParams();
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
-      id: "as",
       body: { pageId: params.pageId, projectId: params.project },
+      initialMessages: [
+        { id: "system", role: "system", content: systemPrompt },
+      ],
     });
   return (
     <div className="flex flex-col justify-between h-full w-full">
       <ScrollArea className="h-full">
         {messages.length !== 0 ? (
-          messages.map((m) => (
-            <div
-              className={cn(
-                "rounded-xl bg-zinc-100 text-card-foreground shadow m-2 p-2",
-                m.role !== "user" && "bg-primary/15",
-                m.role !== "user" ? "mr-8" : "ml-8"
-              )}
-              key={m.id}
-            >
-              {m.content}
-            </div>
-          ))
+          messages
+            .filter((m) => m.role !== "system")
+            .map((m) => (
+              <div
+                className={cn(
+                  "rounded-xl bg-zinc-100 text-card-foreground shadow m-2 p-2",
+                  m.role !== "user" && "bg-primary/15",
+                  m.role !== "user" ? "mr-8" : "ml-8"
+                )}
+                key={m.id}
+              >
+                {m.content}
+              </div>
+            ))
         ) : (
           <div className="flex items-center h-full p-4">
             <p className="text-xs">

@@ -16,6 +16,7 @@ export const runtime = "nodejs";
 export async function POST(req: Request) {
   const json = await req.json();
   const { messages, pageId, projectId } = json;
+  console.log(messages);
   const profile = await currentProfile();
   if (!profile) {
     return redirectToSignIn();
@@ -52,15 +53,15 @@ export async function POST(req: Request) {
   const member = project.members.find(
     (member) => member.profileId === profile.id
   );
-  console.log(member);
   if (!member) {
     return new NextResponse("Project ID missing", { status: 400 });
   }
 
   const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+    model: "gpt-3.5-turbo-1106",
     stream: true,
     messages: messages,
+    max_tokens: 3000,
   });
 
   const stream = OpenAIStream(response, {
