@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { CountContextProvider } from "@/context/codeContext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <ModalProvider />
           <CountContextProvider>{children}</CountContextProvider>
         </body>
+        <Script src="https://unpkg.com/@babel/standalone/babel.min.js" />
       </html>
     </ClerkProvider>
   );
