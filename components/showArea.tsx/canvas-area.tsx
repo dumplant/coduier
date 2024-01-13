@@ -31,7 +31,7 @@ const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
   { ssr: false }
 );
-const Canvas = () => {
+const CanvasArea = () => {
   const { code, setCode, success, setSuccess } = useContext(CodeContext);
 
   const extractCode = useMemo(() => {
@@ -85,4 +85,4 @@ const Canvas = () => {
   );
 };
 
-export default Canvas;
+export default CanvasArea;

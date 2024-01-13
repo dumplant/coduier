@@ -20,7 +20,7 @@ const EditorLayout = async ({ children }: { children: React.ReactNode }) => {
           {projectName} / {pageName}
         </div>
         <div>
-          <Button onClick={() => router.back()}>
+          <Button className="mr-3" onClick={() => router.back()}>
             <ArrowBigLeft />
             <p className="ml-1">返回</p>
           </Button>
