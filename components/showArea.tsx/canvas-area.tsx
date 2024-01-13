@@ -39,9 +39,10 @@ const CanvasArea = () => {
     setSuccess(true);
     return result;
   }, [code]);
+
   console.log(extractCode);
   return (
-    <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll	">
+    <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll ">
       <ErrorBoundary
         fallback={<div>糟糕，出错了，请重试</div>}
         onError={(error) => {
@@ -78,7 +79,7 @@ const CanvasArea = () => {
           }}
         >
           {`(props)=>{
-          const {Card,User,AspectRatio,Key,Home RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
+          const {Card,User,AspectRatio,Key,Home, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
          const {useState}=React;
          ${extractCode}
        }`}
