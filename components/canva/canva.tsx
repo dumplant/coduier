@@ -1,10 +1,11 @@
 "use client";
 import DormSelectionForm from "./test";
+import { Check, ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select as UISelect,
+  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -21,7 +22,9 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
+import { CodeContext } from "@/context/codeContext";
+import { extractLastBracesContent } from "@/utils/extract";
 
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
@@ -30,7 +33,10 @@ const DynamicComponentWithRef = dynamic(
 const Canvas = () => {
   const { code, setCode } = useContext(CodeContext);
 
-  const extractCode = useMemo(() => {}, [code]);
+  const extractCode = useMemo(() => {
+    return extractLastBracesContent(code);
+  }, [code]);
+  console.log(extractCode);
   return (
     <div className="w-[80%] h-[90%] bg-zinc-100">
       <DynamicComponentWithRef
@@ -38,7 +44,7 @@ const Canvas = () => {
           Card,
           CardTitle,
           CardHeader,
-          UISelect,
+          Select,
           CardContent,
           Label,
           Button,
@@ -52,12 +58,15 @@ const Canvas = () => {
           Textarea,
           Checkbox,
           CardFooter,
+          Check,
+          ArrowRight,
+          Search,
         }}
       >
         {`(props)=>{
-          const {Card, RadioGroup, CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, UISelect, CardContent, Label, Button, Input}=props;
+          const {Card, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
          const {useState}=React;
-         ${code}
+         ${extractCode}
        }`}
       </DynamicComponentWithRef>
     </div>
