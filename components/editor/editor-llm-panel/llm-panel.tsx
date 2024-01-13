@@ -2,13 +2,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useParams } from "next/navigation";
 import { currentProfile } from "@/lib/current-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { systemPrompt } from "@/prompt/code-gen";
-
+import { systemPromptJSON } from "@/prompt/json-gen";
+import { CodeContext } from "@/context/codeContext";
 const LLMPanel = () => {
   const params = useParams();
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
@@ -19,6 +20,31 @@ const LLMPanel = () => {
         { id: "system", role: "system", content: systemPrompt },
       ],
     });
+  const { code, setCode } = useContext(CodeContext);
+
+  useEffect(() => {
+    const pattern = /```(\w+)?\n([\s\S]+?)\n```/g;
+    const output = messages[messages.length - 1].content;
+    let matches = pattern.exec(output);
+
+    if (messages.length < 2 || !matches) {
+      return;
+    }
+    console.log("#", matches);
+
+    const language = matches[1];
+    const codeBlock = matches[2];
+    if (
+      language === undefined ||
+      language === "jsx" ||
+      language === "tsx" ||
+      language === "json"
+    ) {
+      setCode(codeBlock);
+      console.log("codeBlock", codeBlock);
+    }
+  }, [messages]);
+
   return (
     <div className="flex flex-col justify-between h-full w-full">
       <ScrollArea className="h-full">
