@@ -1,6 +1,6 @@
 "use client";
 import DormSelectionForm from "./test";
-import { Check, ArrowRight, Search, User } from "lucide-react";
+import { Check, ArrowRight, Search, User, Key, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,7 +26,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { CodeContext } from "@/context/codeContext";
 import { extractLastBracesContent } from "@/utils/extract";
 import { ErrorBoundary } from "react-error-boundary";
-
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
   { ssr: false }
@@ -72,10 +72,13 @@ const CanvasArea = () => {
             ArrowRight,
             Search,
             User,
+            Key,
+            Home,
+            AspectRatio,
           }}
         >
           {`(props)=>{
-          const {Card,User, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
+          const {Card,User,AspectRatio,Key,Home RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
          const {useState}=React;
          ${extractCode}
        }`}
