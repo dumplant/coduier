@@ -2,7 +2,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useParams } from "next/navigation";
 import { currentProfile } from "@/lib/current-profile";
@@ -54,13 +54,19 @@ const LLMPanel = () => {
             .map((m) => (
               <div
                 className={cn(
-                  "rounded-xl bg-zinc-100 text-card-foreground shadow m-2 p-2",
+                  "rounded-xl bg-zinc-100 w-[80%] text-card-foreground shadow m-2 p-2",
                   m.role !== "user" && "bg-primary/15",
                   m.role !== "user" ? "mr-8" : "ml-8"
                 )}
                 key={m.id}
               >
-                {m.content}
+                {isLoading && m.role !== "user" ? (
+                  "生成中..."
+                ) : !isLoading && m.role !== "user" && code ? (
+                  <a>生成成功，点击查看代码</a>
+                ) : (
+                  m.content
+                )}
               </div>
             ))
         ) : (

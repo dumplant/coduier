@@ -1,6 +1,6 @@
 "use client";
 import DormSelectionForm from "./test";
-import { Check, ArrowRight, Search } from "lucide-react";
+import { Check, ArrowRight, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,7 +38,7 @@ const Canvas = () => {
   }, [code]);
   console.log(extractCode);
   return (
-    <div className="w-[80%] h-[90%] bg-zinc-100">
+    <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll	">
       <DynamicComponentWithRef
         data={{
           Card,
@@ -61,10 +61,11 @@ const Canvas = () => {
           Check,
           ArrowRight,
           Search,
+          User,
         }}
       >
         {`(props)=>{
-          const {Card, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
+          const {Card,User, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
          const {useState}=React;
          ${extractCode}
        }`}
