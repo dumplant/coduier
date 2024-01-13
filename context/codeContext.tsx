@@ -5,9 +5,9 @@ export const CodeContext = createContext(null);
 
 export const CountContextProvider = ({ children }) => {
   const [code, setCode] = useState<string>("");
-
+  const [success, setSuccess] = useState<boolean>(false);
   return (
-    <CodeContext.Provider value={{ code, setCode }}>
+    <CodeContext.Provider value={{ code, setCode, success, setSuccess }}>
       {children}
     </CodeContext.Provider>
   );

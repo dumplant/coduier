@@ -25,51 +25,62 @@ import dynamic from "next/dynamic";
 import { useContext, useEffect, useMemo } from "react";
 import { CodeContext } from "@/context/codeContext";
 import { extractLastBracesContent } from "@/utils/extract";
+import { ErrorBoundary } from "react-error-boundary";
 
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
   { ssr: false }
 );
 const Canvas = () => {
-  const { code, setCode } = useContext(CodeContext);
+  const { code, setCode, success, setSuccess } = useContext(CodeContext);
 
   const extractCode = useMemo(() => {
-    return extractLastBracesContent(code);
+    const result = extractLastBracesContent(code);
+    setSuccess(true);
+    return result;
   }, [code]);
   console.log(extractCode);
   return (
     <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll	">
-      <DynamicComponentWithRef
-        data={{
-          Card,
-          CardTitle,
-          CardHeader,
-          Select,
-          CardContent,
-          Label,
-          Button,
-          Input,
-          RadioGroup,
-          RadioGroupItem,
-          SelectTrigger,
-          SelectValue,
-          SelectItem,
-          SelectContent,
-          Textarea,
-          Checkbox,
-          CardFooter,
-          Check,
-          ArrowRight,
-          Search,
-          User,
+      <ErrorBoundary
+        fallback={<div>糟糕，出错了，请重试</div>}
+        onError={(error) => {
+          console.log(error);
+          setSuccess(false);
         }}
       >
-        {`(props)=>{
+        <DynamicComponentWithRef
+          data={{
+            Card,
+            CardTitle,
+            CardHeader,
+            Select,
+            CardContent,
+            Label,
+            Button,
+            Input,
+            RadioGroup,
+            RadioGroupItem,
+            SelectTrigger,
+            SelectValue,
+            SelectItem,
+            SelectContent,
+            Textarea,
+            Checkbox,
+            CardFooter,
+            Check,
+            ArrowRight,
+            Search,
+            User,
+          }}
+        >
+          {`(props)=>{
           const {Card,User, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
          const {useState}=React;
          ${extractCode}
        }`}
-      </DynamicComponentWithRef>
+        </DynamicComponentWithRef>
+      </ErrorBoundary>
     </div>
   );
 };
