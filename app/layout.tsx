@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { CountContextProvider } from "@/context/codeContext";
 import Script from "next/script";
+import { PageContextProvider } from "@/context/pageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ModalProvider />
-          <CountContextProvider>{children}</CountContextProvider>
+          <PageContextProvider>
+            <CountContextProvider>{children}</CountContextProvider>
+          </PageContextProvider>
         </body>
         <Script src="https://unpkg.com/@babel/standalone/babel.min.js" />
       </html>

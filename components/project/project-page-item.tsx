@@ -7,6 +7,8 @@ import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { ModalType, useModal } from "@/hooks/use-modal-store";
+import { useContext, useEffect } from "react";
+import { PageContext } from "@/context/pageContext";
 
 interface ProjectPageProps {
   page: Page;
@@ -18,7 +20,8 @@ export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
   const { onOpen } = useModal();
   const params = useParams();
   const router = useRouter();
-
+  const { pageName, setPageName, projectName, setProjectName } =
+    useContext(PageContext);
   const onClick = () => {
     router.push(`/projects/${params?.projectId}/pages/${page.id}`);
   };
@@ -28,6 +31,9 @@ export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
     onOpen(action, { page, project });
   };
 
+  useEffect(() => {
+    setProjectName(project.name);
+  }, []);
   return (
     <button
       onClick={onClick}
@@ -51,6 +57,7 @@ export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
             <Edit
               onClick={(e) => {
                 e.stopPropagation();
+                setPageName(page.name);
                 router.push(
                   `/edit/projects/${params?.projectId}/pages/${page.id}`
                 );
