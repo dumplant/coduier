@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/components/providers/modal-provider";
-import { CountContextProvider } from "@/context/codeContext";
+import { CodeContextProvider } from "@/context/codeContext";
 import Script from "next/script";
 import { PageContextProvider } from "@/context/pageContext";
 
@@ -25,7 +25,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <ModalProvider />
           <PageContextProvider>
-            <CountContextProvider>{children}</CountContextProvider>
+            <CodeContextProvider>{children}</CodeContextProvider>
           </PageContextProvider>
         </body>
         <Script src="https://unpkg.com/@babel/standalone/babel.min.js" />
