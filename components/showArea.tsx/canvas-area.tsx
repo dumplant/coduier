@@ -1,6 +1,21 @@
 "use client";
-import DormSelectionForm from "./test";
-import { Check, ArrowRight, Search, User, Key, Home } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Check,
+  Sliders,
+  Play,
+  Volume2,
+  Maximize,
+  ArrowRight,
+  Search,
+  User,
+  Key,
+  Home,
+  PlayCircle,
+  Fullscreen,
+  Pause,
+  Volume,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -27,6 +43,31 @@ import { CodeContext } from "@/context/codeContext";
 import { extractLastBracesContent } from "@/utils/extract";
 import { ErrorBoundary } from "react-error-boundary";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Calendar } from "@/components/ui/calendar";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Progress } from "@/components/ui/progress";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Slider } from "@/components/ui/slider";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
   { ssr: false }
@@ -55,6 +96,7 @@ const CanvasArea = () => {
             Card,
             CardTitle,
             CardHeader,
+            CardDescription,
             Select,
             CardContent,
             Label,
@@ -76,10 +118,47 @@ const CanvasArea = () => {
             Key,
             Home,
             AspectRatio,
+            Calendar,
+            Alert,
+            AlertDescription,
+            AlertTitle,
+            Avatar,
+            AvatarFallback,
+            AvatarImage,
+            Popover,
+            PopoverContent,
+            PopoverTrigger,
+            Progress,
+            Sliders,
+            Play,
+            Volume2,
+            Maximize,
+            Tooltip,
+            TooltipContent,
+            TooltipProvider,
+            TooltipTrigger,
+            Slider,
+            PlayCircle,
+            Fullscreen,
+            Menubar,
+            MenubarContent,
+            MenubarItem,
+            MenubarMenu,
+            MenubarSeparator,
+            MenubarShortcut,
+            MenubarTrigger,
+            Pause,
+            Volume,
           }}
         >
           {`(props)=>{
-          const {Card,User,AspectRatio,Key,Home, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input}=props;
+          const {PlayCircle,Fullscreen,Slider,Tooltip,TooltipContent,TooltipProvider, TooltipTrigger,Play, Volume2, Maximize,Progress,Popover,PopoverContent,PopoverTrigger,Card,CardDescription,User,Calendar,Alert, AlertDescription, AlertTitle,Avatar, AvatarFallback, AvatarImage,AspectRatio,Key,Home, RadioGroup,Select,Search, Check,ArrowRight,CardFooter,Checkbox,Textarea,SelectItem,SelectValue,SelectContent,SelectTrigger,RadioGroupItem,CardTitle,CardHeader, CardContent, Label, Button, Input,Menubar,
+            MenubarContent,
+            MenubarItem,
+            MenubarMenu,
+            MenubarSeparator,
+            MenubarShortcut,
+            MenubarTrigger,Pause,Volume}=props;
          const {useState}=React;
          ${extractCode}
        }`}
