@@ -17,3 +17,15 @@ export function extractLastBracesContent(str: string) {
   console.log("result", result);
   return result;
 }
+
+export function extractCodeBlock(str: string) {
+  const pattern = /```(\w+)?\n([\s\S]+?)\n```/g;
+  let matches = pattern.exec(str);
+
+  if (!matches) {
+    return;
+  }
+  const codeBlock = matches[2];
+
+  return codeBlock;
+}

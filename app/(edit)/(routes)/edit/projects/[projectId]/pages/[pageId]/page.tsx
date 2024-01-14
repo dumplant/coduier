@@ -3,11 +3,27 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import CanvasArea from "@/components/showArea.tsx/canvas-area";
 import CodeArea from "@/components/showArea.tsx/code-area";
 import { Button } from "@/components/ui/button";
+import { CodeContext } from "@/context/codeContext";
+import { extractCodeBlock } from "@/utils/extract";
+import axios from "axios";
 import { Code, Computer, Laptop2 } from "lucide-react";
-import { useState } from "react";
+import { useParams } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 
 const EditPage = () => {
   const [showCanvas, setShowCanvas] = useState(true);
+  const [messages, setMessages] = useState(null);
+  const { code, setCode, success, setSuccess } = useContext(CodeContext);
+
+  const { pageId } = useParams();
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await axios.get(`/api/messages?pageId=${pageId}`);
+      setMessages(data);
+      setCode(extractCodeBlock(data[0].response));
+    }
+    fetchData();
+  }, [pageId]);
 
   return (
     <div className="relative w-full h-full flex justify-center items-center">
@@ -27,7 +43,7 @@ const EditPage = () => {
           )}
         </Button>
       </div>
-      {showCanvas ? <CanvasArea /> : <CodeArea />}
+      {showCanvas ? <CanvasArea messages={messages} /> : <CodeArea />}
     </div>
   );
 };
