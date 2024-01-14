@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         description,
         inviteCode: uuidv4(),
         pages: {
-          create: [{ name: "general", profileId: profile.id }],
+          create: [{ name: "初始页面", profileId: profile.id }],
         },
         members: {
           create: [{ profileId: profile.id, role: MemberRole.ADMIN }],

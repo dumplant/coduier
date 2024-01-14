@@ -36,7 +36,10 @@ const ProjectIdLayout = async ({
       <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
         <ProjectSidebar projectId={params.projectId} />
       </div>
-      <main className="h-full md:pl-60">{children}</main>
+      <div className="absolute top-0 right-0 bg-zinc-700 rounded-bl-sm text-white p-2">
+        ✨ <span className="font-bold">CODUIER</span> · 前端代码生成工具
+      </div>
+      <main className="h-full md:pl-60 pt-5">{children}</main>
     </div>
   );
 };
