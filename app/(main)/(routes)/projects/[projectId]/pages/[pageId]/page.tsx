@@ -19,8 +19,13 @@ const page = () => {
   useEffect(() => {
     async function fetchData() {
       const { data } = await axios.get(`/api/messages?pageId=${pageId}`);
-      setMessages(extractCodeBlock(data[0].response));
-      setCode(extractCodeBlock(data[0].response));
+      if (data.length < 1) {
+        setMessages("export default Empty() => {return <div>暂无内容</div>}");
+        setCode("export default Empty() => {return <div>暂无内容</div>}");
+      } else {
+        setMessages(extractCodeBlock(data[0].response));
+        setCode(extractCodeBlock(data[0].response));
+      }
     }
     fetchData();
   }, [pageId]);
