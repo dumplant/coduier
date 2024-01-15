@@ -3,6 +3,7 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import CanvasArea from "@/components/showArea.tsx/canvas-area";
 import CodeArea from "@/components/showArea.tsx/code-area";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading";
 import { CodeContext } from "@/context/codeContext";
 import { extractCodeBlock } from "@/utils/extract";
 import axios from "axios";
@@ -13,14 +14,14 @@ import { useContext, useEffect, useState } from "react";
 const EditPage = () => {
   const [showCanvas, setShowCanvas] = useState(true);
   const [messages, setMessages] = useState(null);
-  const { code, setCode, success, setSuccess } = useContext(CodeContext);
+  const { code, setCode, isCodeLoading, setSuccess } = useContext(CodeContext);
 
   const { pageId } = useParams();
   useEffect(() => {
     async function fetchData() {
       const { data } = await axios.get(`/api/messages?pageId=${pageId}`);
       setMessages(data);
-      setCode(extractCodeBlock(data[0].response));
+      setCode(extractCodeBlock(data[0]?.response));
     }
     fetchData();
   }, [pageId]);
@@ -43,7 +44,13 @@ const EditPage = () => {
           )}
         </Button>
       </div>
-      {showCanvas ? <CanvasArea messages={messages} /> : <CodeArea />}
+      {isCodeLoading ? (
+        <LoadingSpinner />
+      ) : showCanvas ? (
+        <CanvasArea />
+      ) : (
+        <CodeArea />
+      )}
     </div>
   );
 };

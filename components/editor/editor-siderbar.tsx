@@ -1,14 +1,19 @@
 "use client";
 import { UserButton } from "@clerk/nextjs";
-import { BrainCircuit, Code, Component, LucideIcon } from "lucide-react";
+import {
+  BrainCircuit,
+  BookTemplate,
+  Component,
+  LucideIcon,
+} from "lucide-react";
 import { ActionTooltip } from "../action-tooltip";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import LLMPanel from "./editor-llm-panel/llm-panel";
 import ComponentPanel from "./editor-panel/compoent-panel";
-import CodePanel from "./editor-panel/code-panel";
+import TemplatePanel from "./editor-panel/template-panel";
 
-type EditorItemKeys = "LLM" | "component" | "code";
+type EditorItemKeys = "LLM" | "component" | "template";
 type EditorItemProps = {
   key: EditorItemKeys;
   name: string;
@@ -32,10 +37,10 @@ const EditorSidebar = () => {
       panel: ComponentPanel(),
     },
     {
-      key: "code",
-      name: "代码",
-      icon: Code,
-      panel: CodePanel(),
+      key: "template",
+      name: "模版",
+      icon: BookTemplate,
+      panel: TemplatePanel(),
     },
   ];
 

@@ -103,21 +103,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 </Alert>;
 \`\`\`
 
-### Available Component 4, aspect-ratio:
-
-\`\`\`jsx
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-<div className="w-[450px]">
-  <AspectRatio ratio={16 / 9}>
-    <img
-      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-      alt="Image"
-      className="rounded-md object-cover"
-    />
-  </AspectRatio>
-</div>;
-\`\`\`
-
 ### Available Component 5, avatar:
 
 \`\`\`jsx

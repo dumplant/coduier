@@ -20,7 +20,8 @@ const LLMPanel = () => {
         { id: "system", role: "system", content: systemPrompt },
       ],
     });
-  const { code, setCode } = useContext(CodeContext);
+  const { code, setCode, isCodeLoading, setIsCodeLoading } =
+    useContext(CodeContext);
 
   useEffect(() => {
     const pattern = /```(\w+)?\n([\s\S]+?)\n```/g;
@@ -45,12 +46,16 @@ const LLMPanel = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    setIsCodeLoading(isLoading);
+  }, [isLoading]);
+
   return (
     <div className="flex flex-col justify-between h-full w-full">
       <ScrollArea className="h-full">
         {messages.length !== 0 ? (
           messages
-            .filter((m) => m.role !== "system")
+            .filter((m) => m.role === "user")
             .map((m) => (
               <div
                 className={cn(
@@ -60,13 +65,14 @@ const LLMPanel = () => {
                 )}
                 key={m.id}
               >
-                {isLoading && m.role !== "user" ? (
+                {m.role === "user" && m.content}
+                {/* {isLoading && m.role !== "user" ? (
                   "生成中..."
                 ) : !isLoading && m.role !== "user" && code ? (
                   <a>生成成功，点击查看代码</a>
                 ) : (
                   m.content
-                )}
+                )} */}
               </div>
             ))
         ) : (

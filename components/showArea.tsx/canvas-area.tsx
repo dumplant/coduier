@@ -67,6 +67,7 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
@@ -93,6 +94,10 @@ const CanvasArea = () => {
       >
         <DynamicComponentWithRef
           data={{
+            Tabs,
+            TabsContent,
+            TabsList,
+            TabsTrigger,
             Card,
             CardTitle,
             CardHeader,
@@ -158,7 +163,10 @@ const CanvasArea = () => {
             MenubarMenu,
             MenubarSeparator,
             MenubarShortcut,
-            MenubarTrigger,Pause,Volume}=props;
+            MenubarTrigger,Pause,Volume,Tabs,
+            TabsContent,
+            TabsList,
+            TabsTrigger,}=props;
          const {useState}=React;
          ${extractCode}
        }`}

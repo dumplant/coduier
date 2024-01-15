@@ -23,8 +23,8 @@ const page = () => {
         setMessages("export default Empty() => {return <div>暂无内容</div>}");
         setCode("export default Empty() => {return <div>暂无内容</div>}");
       } else {
-        setMessages(extractCodeBlock(data[0].response));
-        setCode(extractCodeBlock(data[0].response));
+        setMessages(extractCodeBlock(data[0]?.response));
+        setCode(extractCodeBlock(data[0]?.response));
       }
     }
     fetchData();

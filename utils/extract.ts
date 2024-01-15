@@ -1,5 +1,7 @@
 export function extractLastBracesContent(str: string) {
-  console.log("str", str);
+  if (!str) {
+    return "";
+  }
   let stack = [];
   let lastLeft = -1;
 
