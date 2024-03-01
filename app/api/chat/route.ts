@@ -7,6 +7,7 @@ import { Configuration, OpenAIApi } from "openai-edge";
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
+  basePath: "https://api.openai-proxy.com/v1",
 });
 
 const openai = new OpenAIApi(config);
