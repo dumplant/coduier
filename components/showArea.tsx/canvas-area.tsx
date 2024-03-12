@@ -17,6 +17,7 @@ import {
   Volume,
   Settings,
   Lock,
+  Badge,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -88,6 +89,14 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
@@ -190,6 +199,13 @@ const CanvasArea = () => {
             NavigationMenuTrigger,
             NavigationMenuViewport,
             Lock,
+            Separator,
+            Badge,
+            Accordion,
+            AccordionContent,
+            AccordionItem,
+            AccordionTrigger,
+            ScrollArea,
           }}
         >
           {`(props)=>{
@@ -216,7 +232,11 @@ const CanvasArea = () => {
             NavigationMenuLink,
             NavigationMenuList,
             NavigationMenuTrigger,
-            NavigationMenuViewport,Lock
+            NavigationMenuViewport,Lock,Separator,Badge,
+            Accordion,
+            AccordionContent,
+            AccordionItem,
+            AccordionTrigger,ScrollArea
           }=props;
          const {useState}=React;
          ${extractCode}
