@@ -15,6 +15,8 @@ import {
   Fullscreen,
   Pause,
   Volume,
+  Settings,
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -67,7 +69,25 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 
 const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
@@ -154,6 +174,22 @@ const CanvasArea = () => {
             MenubarTrigger,
             Pause,
             Volume,
+            DropdownMenu,
+            DropdownMenuContent,
+            DropdownMenuItem,
+            DropdownMenuLabel,
+            DropdownMenuSeparator,
+            DropdownMenuTrigger,
+            Settings,
+            NavigationMenu,
+            NavigationMenuContent,
+            NavigationMenuIndicator,
+            NavigationMenuItem,
+            NavigationMenuLink,
+            NavigationMenuList,
+            NavigationMenuTrigger,
+            NavigationMenuViewport,
+            Lock,
           }}
         >
           {`(props)=>{
@@ -166,7 +202,22 @@ const CanvasArea = () => {
             MenubarTrigger,Pause,Volume,Tabs,
             TabsContent,
             TabsList,
-            TabsTrigger,}=props;
+            TabsTrigger, 
+            DropdownMenu,
+            DropdownMenuContent,
+            DropdownMenuItem,
+            DropdownMenuLabel,
+            DropdownMenuSeparator,
+            DropdownMenuTrigger,Settings,
+            NavigationMenu,
+            NavigationMenuContent,
+            NavigationMenuIndicator,
+            NavigationMenuItem,
+            NavigationMenuLink,
+            NavigationMenuList,
+            NavigationMenuTrigger,
+            NavigationMenuViewport,Lock
+          }=props;
          const {useState}=React;
          ${extractCode}
        }`}
