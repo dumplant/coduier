@@ -28,6 +28,9 @@ import { useModal } from "@/hooks/use-modal-store";
 import qs from "query-string";
 
 const formSchema = z.object({
+  nameCN: z.string().min(1, {
+    message: "必填",
+  }),
   name: z.string().min(1, {
     message: "必填",
   }),
@@ -49,6 +52,7 @@ const CreateTemplateModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      nameCN: "",
       code: "",
       description: "",
     },
@@ -57,6 +61,17 @@ const CreateTemplateModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      const url = qs.stringifyUrl({
+        url: "/api/templates",
+        query: {
+          projectId: params?.projectId,
+        },
+      });
+      await axios.post(url, values);
+
+      form.reset();
+      router.refresh();
+      onClose();
     } catch (error) {
       console.log(error);
     }
@@ -82,11 +97,30 @@ const CreateTemplateModal = () => {
             <div className="space-y-8 px-6">
               <FormField
                 control={form.control}
-                name="name"
+                name="nameCN"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
                       模版名称
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="请输入"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      模版英文名称
                     </FormLabel>
                     <FormControl>
                       <Input

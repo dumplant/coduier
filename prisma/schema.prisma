@@ -106,7 +106,8 @@ model Template {
   id     String @id @default(uuid())
   name   String
   nameCN String
-  Code   String
+  description String
+  code   String
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
