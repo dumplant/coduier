@@ -18,6 +18,7 @@ import {
   Settings,
   Lock,
   Badge,
+  Save,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -206,6 +207,7 @@ const CanvasArea = () => {
             AccordionItem,
             AccordionTrigger,
             ScrollArea,
+            Save,
           }}
         >
           {`(props)=>{
@@ -236,7 +238,7 @@ const CanvasArea = () => {
             Accordion,
             AccordionContent,
             AccordionItem,
-            AccordionTrigger,ScrollArea
+            AccordionTrigger,ScrollArea,Save
           }=props;
          const {useState}=React;
          ${extractCode}
