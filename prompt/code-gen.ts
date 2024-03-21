@@ -172,7 +172,19 @@ import {
 
 \`\`\`jsx
 import { Checkbox } from "@/components/ui/checkbox";
-<Checkbox />;
+export function CheckboxDemo() {
+  return (
+    <div className="flex items-center space-x-2">
+      <Checkbox id="terms" />
+      <label
+        htmlFor="terms"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Accept terms and conditions
+      </label>
+    </div>
+  )
+}
 \`\`\`
 
 ### Available Component 11, collapsible:
@@ -579,4 +591,4 @@ import { Home, User, Settings } from "lucide-react";
 </div>;
 \`\`\`
 
-Create JSX code when you get the detailed instructions.`;
+Create JSX code when you get the detailed instructions, be sure the code contains export and return statement.`;
