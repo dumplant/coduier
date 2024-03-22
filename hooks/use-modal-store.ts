@@ -10,7 +10,7 @@ export type ModalType =
   | "createTemplate"
   | "leaveServer"
   | "deleteProject"
-  | "deleteChannel"
+  | "deletePage"
   | "editChannel"
   | "messageFile"
   | "deleteMessage";
