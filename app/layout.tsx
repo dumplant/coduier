@@ -6,6 +6,7 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { CodeContextProvider } from "@/context/codeContext";
 import Script from "next/script";
 import { PageContextProvider } from "@/context/pageContext";
+import { MessageContextProvider } from "@/context/messageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         <body className={inter.className}>
           <ModalProvider />
           <PageContextProvider>
-            <CodeContextProvider>{children}</CodeContextProvider>
+            <CodeContextProvider>
+              <MessageContextProvider>{children}</MessageContextProvider>
+            </CodeContextProvider>
           </PageContextProvider>
         </body>
         <Script src="https://unpkg.com/@babel/standalone/babel.min.js" />

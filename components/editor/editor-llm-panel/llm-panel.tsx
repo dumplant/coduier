@@ -10,6 +10,7 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { systemPrompt } from "@/prompt/code-gen";
 import { systemPromptJSON } from "@/prompt/json-gen";
 import { CodeContext } from "@/context/codeContext";
+import { MessageContext } from "@/context/messageContext";
 const LLMPanel = () => {
   const params = useParams();
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
@@ -22,7 +23,8 @@ const LLMPanel = () => {
     });
   const { code, setCode, isCodeLoading, setIsCodeLoading } =
     useContext(CodeContext);
-
+  const { message } = useContext(MessageContext);
+  console.log(message);
   useEffect(() => {
     const pattern = /```(\w+)?\n([\s\S]+?)\n```/g;
     const output = messages[messages.length - 1].content;
@@ -49,23 +51,23 @@ const LLMPanel = () => {
   useEffect(() => {
     setIsCodeLoading(isLoading);
   }, [isLoading]);
-
   return (
     <div className="flex flex-col justify-between h-full w-full">
       <ScrollArea className="h-full">
-        {messages.length !== 0 ? (
-          messages
-            .filter((m) => m.role === "user")
+        {message.length !== 0 ? (
+          // message数组逆序输出
+
+          message
+            .slice()
+            .reverse()
             .map((m) => (
               <div
                 className={cn(
-                  "rounded-xl bg-zinc-100 w-[80%] text-card-foreground shadow m-2 p-2",
-                  m.role !== "user" && "bg-primary/15",
-                  m.role !== "user" ? "mr-8" : "ml-8"
+                  "rounded-xl bg-zinc-100 w-[80%] text-card-foreground shadow m-2 p-2"
                 )}
                 key={m.id}
               >
-                {m.role === "user" && m.content}
+                {m.content || 123}
                 {/* {isLoading && m.role !== "user" ? (
                   "生成中..."
                 ) : !isLoading && m.role !== "user" && code ? (
