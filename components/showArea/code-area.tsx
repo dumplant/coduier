@@ -22,6 +22,16 @@ const CodeArea = () => {
     }, 1000);
   };
 
+  const handleDownload = () => {
+    const blob = new Blob([code], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "page.jsx";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   function setCodeHighlighter() {
     setCDN("https://cdn.jsdelivr.net/npm/shiki");
     getHighlighter({ theme: "one-dark-pro", langs: ["jsx"] })
@@ -55,7 +65,11 @@ const CodeArea = () => {
             <Copy className="w-4 h-4" />
           )}
         </Button>
-        <Button className="p-1 text-zinc-400 hover:text-white" variant={"link"}>
+        <Button
+          className="p-1 text-zinc-400 hover:text-white"
+          variant={"link"}
+          onClick={handleDownload}
+        >
           <Download />
         </Button>
       </div>

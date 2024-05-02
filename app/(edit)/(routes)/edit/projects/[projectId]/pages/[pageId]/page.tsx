@@ -1,7 +1,7 @@
 "use client";
 import { ActionTooltip } from "@/components/action-tooltip";
-import CanvasArea from "@/components/showArea.tsx/canvas-area";
-import CodeArea from "@/components/showArea.tsx/code-area";
+import CanvasArea from "@/components/showArea/canvas-area";
+import CodeArea from "@/components/showArea/code-area";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading";
 import { CodeContext } from "@/context/codeContext";
