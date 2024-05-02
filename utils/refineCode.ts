@@ -3,7 +3,7 @@ import { generateImports } from "./generateImports";
 
 export function refineCode(code: string) {
   const fromReact = new Set<string>();
-  const usedVariables = new Set<string>();
+  const usedElements = new Set<string>();
   const declarations = new Set<string>();
   const ast = parse(code);
 
@@ -37,34 +37,21 @@ export function refineCode(code: string) {
       this.traverse(p);
     },
     visitJSXIdentifier(p) {
-      const elName = p.node.name;
-      if (
-        p.parent?.node.type === "JSXOpeningElement" &&
-        elName[0].toUpperCase() === elName[0] &&
-        !fromReact.has(elName)
-      ) {
-        usedVariables.add(elName);
+      if (isJSXElement(p, fromReact)) {
+        usedElements.add(p.node.name);
       }
       this.traverse(p);
     },
   });
 
   const { importStatements, fallbacks } = generateImports(
-    Array.from(usedVariables),
+    Array.from(usedElements),
     declarations
   );
 
   visit(ast, {
     visitJSXIdentifier(p) {
-      const elName = p.node.name;
-      if (
-        ["JSXOpeningElement", "JSXClosingElement"].includes(
-          p.parent?.node.type
-        ) &&
-        elName[0].toUpperCase() === elName[0] &&
-        !fromReact.has(elName) &&
-        fallbacks.includes(elName)
-      ) {
+      if (isJSXElement(p, fromReact) && fallbacks.includes(p.node.name)) {
         p.replace(types.builders.jsxIdentifier("div"));
       }
       this.traverse(p);
@@ -72,4 +59,13 @@ export function refineCode(code: string) {
   });
 
   return importStatements + print(ast).code;
+}
+
+function isJSXElement(p: any, fromReact: Set<string>) {
+  const elName = p.node.name;
+  return (
+    p.parent?.node.type === "JSXOpeningElement" &&
+    elName[0].toUpperCase() === elName[0] &&
+    !fromReact.has(elName)
+  );
 }
