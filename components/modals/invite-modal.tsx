@@ -64,7 +64,7 @@ const InviteModal = () => {
         </DialogHeader>
         <div className="p-6">
           <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-            Server invite link
+            邀请链接
           </Label>
           <div className="flex items-center mt-2 gap-x-2">
             <Input
@@ -87,7 +87,7 @@ const InviteModal = () => {
             size="sm"
             className="text-xs text-zinc-500 mt-4"
           >
-            Generate a new link
+            点击创建新链接
             <RefreshCw className="w-4 h-4 ml-2" />
           </Button>
         </div>

@@ -13,25 +13,32 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   try {
+    // 从请求体中获取name和description
     const { name, description } = await req.json();
     const profile = await currentProfile();
-
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    // 生成页面数组
     const pages = (await generatePages(name, description)) as Array<string>;
 
+    // 在数据库中创建新的项目
     const project = await db.project.create({
       data: {
+        // 设置项目的用户资料ID
         profileId: profile.id,
+        // 设置项目的名称和描述
         name,
         description,
+        // 生成一个新的邀请码
         inviteCode: uuidv4(),
+        // 创建页面
         pages: {
           create: pages.map((page) => {
             return { name: page, profileId: profile.id };
           }),
         },
+        // 创建项目成员
         members: {
           create: [{ profileId: profile.id, role: MemberRole.ADMIN }],
         },
