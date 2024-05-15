@@ -52,3 +52,42 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const profile = await currentProfile();
+    const { searchParams } = new URL(req.url);
+    const projectId = searchParams.get("projectId");
+
+    if (!profile) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (!projectId) {
+      return new NextResponse("Project ID missing", { status: 400 });
+    }
+
+    const project = await db.project.findFirst({
+      where: {
+        id: projectId,
+        members: {
+          some: {
+            profileId: profile.id,
+          },
+        },
+      },
+      include: {
+        pages: true,
+      },
+    });
+
+    if (!project) {
+      return new NextResponse("Project not found", { status: 404 });
+    }
+
+    return NextResponse.json(project.pages);
+  } catch (error) {
+    console.log("PAGES_GET", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}

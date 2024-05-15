@@ -8,7 +8,7 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://api.openai-proxy.com/v1",
+  baseURL: "https://api.xiaoai.plus/v1",
 });
 
 export async function POST(req: Request) {
@@ -65,7 +65,7 @@ export async function generatePages(projectName: string, description: string) {
           "For example, the output should put all the names in an array, like ['主页','关于我们','个人中心']",
       },
     ],
-    model: "gpt-3.5-turbo-1106",
+    model: "gpt-4",
   });
 
   const pages =

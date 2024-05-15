@@ -19,6 +19,8 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+import { exportCode, handleExportCode } from "@/utils/exportCode";
+import axios from "axios";
 
 interface ProjectHeaderProps {
   project: ProjectWithMembersWithProfiles;
@@ -91,6 +93,15 @@ const ProjectHeader = ({ project, role }: ProjectHeaderProps) => {
             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
           >
             退出项目
+            <LogOut className="h-4 w-4 ml-auto" />
+          </DropdownMenuItem>
+        )}
+        {isAdmin && (
+          <DropdownMenuItem
+            onClick={() => exportCode(project.id)}
+            className=" px-3 py-2 text-sm cursor-pointer"
+          >
+            导出代码
             <LogOut className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}

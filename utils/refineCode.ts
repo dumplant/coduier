@@ -22,6 +22,13 @@ export function refineCode(code: string) {
       this.traverse(p);
     },
   });
+  console.log(
+    "第一次遍历",
+    print(ast).code,
+    fromReact,
+    usedElements,
+    declarations
+  );
 
   visit(ast, {
     visitIdentifier(p) {
@@ -37,35 +44,63 @@ export function refineCode(code: string) {
       this.traverse(p);
     },
     visitJSXIdentifier(p) {
-      if (isJSXElement(p, fromReact)) {
-        usedElements.add(p.node.name);
+      const elName = p.node.name;
+      if (
+        p.parent?.node.type === "JSXOpeningElement" &&
+        elName[0].toUpperCase() === elName[0] &&
+        !fromReact.has(elName)
+      ) {
+        usedElements.add(elName);
       }
       this.traverse(p);
     },
   });
+  console.log(
+    "第二次遍历",
+    print(ast).code,
+    fromReact,
+    usedElements,
+    declarations
+  );
 
   const { importStatements, fallbacks } = generateImports(
     Array.from(usedElements),
     declarations
   );
+  console.log("调用generate", importStatements, fallbacks);
 
   visit(ast, {
     visitJSXIdentifier(p) {
-      if (isJSXElement(p, fromReact) && fallbacks.includes(p.node.name)) {
+      const elName = p.node.name;
+      if (
+        ["JSXOpeningElement", "JSXClosingElement"].includes(
+          p.parent?.node.type
+        ) &&
+        elName[0].toUpperCase() === elName[0] &&
+        !fromReact.has(elName) &&
+        fallbacks.includes(elName)
+      ) {
         p.replace(types.builders.jsxIdentifier("div"));
       }
       this.traverse(p);
     },
   });
+  console.log(
+    "第三次遍历",
+    print(ast).code,
+    fromReact,
+    usedElements,
+    declarations
+  );
 
   return importStatements + print(ast).code;
 }
 
-function isJSXElement(p: any, fromReact: Set<string>) {
-  const elName = p.node.name;
-  return (
-    p.parent?.node.type === "JSXOpeningElement" &&
-    elName[0].toUpperCase() === elName[0] &&
-    !fromReact.has(elName)
-  );
-}
+// export function isJSXElement(p: any, fromReact: Set<string>) {
+//   const elName = p.node.name;
+//   return (
+//     p.parent?.node.type === "JSXOpeningElement" &&
+//     elName[0].toUpperCase() === elName[0] &&
+//     !fromReact.has(elName)
+//   );
+// }

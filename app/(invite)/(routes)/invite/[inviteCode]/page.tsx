@@ -35,15 +35,17 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   if (existingProject) {
     return redirect(`/projects/${existingProject.id}`);
   }
-
+  // 更新数据库中的一个项目
   const project = await db.project.update({
     where: {
+      // 指定要更新的项目的条件，这里是邀请码等于参数中的inviteCode的项目
       inviteCode: params.inviteCode,
     },
     data: {
       members: {
         create: [
           {
+            // 将当前用户（由profile.id指定）添加为指定项目的成员
             profileId: profile.id,
           },
         ],
@@ -51,6 +53,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     },
   });
 
+  // 重定向到该项目的页面
   if (project) {
     return redirect(`/projects/${project.id}`);
   }

@@ -225,15 +225,15 @@ export const shadcnRules = [
 ];
 
 export const lucideIcons: Record<string, unknown> = {};
-try {
-  const iconNodes = await (
-    await fetch("https://lucide.dev/api/icon-nodes")
-  ).json();
-  for (const key in iconNodes) {
-    const newKey = key
-      .split("-")
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join("");
-    lucideIcons[newKey] = iconNodes[key];
-  }
-} catch {}
+// try {
+//   const iconNodes = await (
+//     await fetch("https://lucide.dev/api/icon-nodes")
+//   ).json();
+//   for (const key in iconNodes) {
+//     const newKey = key
+//       .split("-")
+//       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+//       .join("");
+//     lucideIcons[newKey] = iconNodes[key];
+//   }
+// } catch {}

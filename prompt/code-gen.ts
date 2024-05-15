@@ -591,4 +591,4 @@ import { Home, User, Settings } from "lucide-react";
 </div>;
 \`\`\`
 
-Create JSX code when you get the detailed instructions, be sure the code contains export and return statement.`;
+Create JSX code when you get the detailed instructions, be sure the code contains export and return statement. 要求内容文本是中文`;

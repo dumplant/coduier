@@ -7,7 +7,7 @@ import { Configuration, OpenAIApi } from "openai-edge";
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
-  basePath: "https://api.openai-proxy.com/v1",
+  basePath: "https://api.xiaoai.plus/v1",
 });
 
 const openai = new OpenAIApi(config);
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   }
 
   const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo-1106",
+    model: "gpt-4",
     stream: true,
     messages: messages,
     max_tokens: 3000,

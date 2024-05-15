@@ -13,17 +13,26 @@ import { CodeContext } from "@/context/codeContext";
 import { MessageContext } from "@/context/messageContext";
 const LLMPanel = () => {
   const params = useParams();
+  const { message } = useContext(MessageContext);
+  const { code, setCode, isCodeLoading, setIsCodeLoading } =
+    useContext(CodeContext);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
       body: { pageId: params.pageId, projectId: params.project },
-      initialMessages: [
-        { id: "system", role: "system", content: systemPrompt },
-      ],
+      initialMessages:
+        code == "export default Empty = () => {return <div>暂无内容</div>}"
+          ? [{ id: "system", role: "system", content: systemPrompt }]
+          : [
+              { id: "system", role: "system", content: systemPrompt },
+              {
+                id: "user",
+                role: "user",
+                content: `这是先前的代码${code}`,
+              },
+            ],
     });
-  const { code, setCode, isCodeLoading, setIsCodeLoading } =
-    useContext(CodeContext);
-  const { message } = useContext(MessageContext);
+
   console.log(message);
   useEffect(() => {
     const pattern = /```(\w+)?\n([\s\S]+?)\n```/g;

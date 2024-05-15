@@ -19,6 +19,8 @@ import {
   Lock,
   Badge,
   Save,
+  Edit,
+  Trash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -98,6 +100,35 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHeader,
+  TableHead,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { refineCode } from "@/utils/refineCode";
 
 const DynamicComponentWithRef = dynamic(
@@ -108,95 +139,12 @@ const CanvasArea = () => {
   const { code, setCode, success, setSuccess } = useContext(CodeContext);
 
   const extractCode = useMemo(() => {
-    const result = extractLastBracesContent(code);
+    let refined = refineCode(code);
+    let result = extractLastBracesContent(refined);
     setSuccess(true);
     return result;
   }, [code]);
 
-  // refineCode(`import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-  // import { Button } from "@/components/ui/button";
-  // import { useState } from 'react';
-
-  // import {
-  //   Card,
-  //   CardContent,
-  //   CardHeader,
-  //   CardTitle,
-  //   CardDescription,
-  //   CardFooter,
-  // } from "@/components/ui/card";
-  // import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-  // import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-  // import { Home, User, Settings } from "lucide-react";
-  // import { useContext, useEffect, useMemo } from "react";
-
-  // export default function StudentDormSelectionPage() {
-  //   const [selectedDorm, setSelectedDorm] = useState("");
-  //   return (
-  //     <main className="p-4">
-  //     <NotFound>123</NotFound>
-  //       <div className="flex items-center justify-between mb-8">
-  //         <h1 className="text-2xl font-bold">学生选宿舍系统</h1>
-  //         <div className="flex items-center space-x-4">
-  //           <Button variant="outline">个人信息</Button>
-  //           <Button variant="outline">选宿舍</Button>
-  //         </div>
-  //       </div>
-
-  //       <Card>
-  //         <CardHeader>
-  //           <Avatar>
-  //             <AvatarImage src="https://source.unsplash.com/random/100x100" />
-  //             <AvatarFallback>CN</AvatarFallback>
-  //           </Avatar>
-  //           <div>
-  //             <CardTitle>张三</CardTitle>
-  //             <p>学号: 123456</p>
-  //           </div>
-  //         </CardHeader>
-  //         <CardContent>
-  //           <div>
-  //             <h2 className="text-lg font-semibold mb-2">选宿舍注意事项</h2>
-  //             <Accordion type="single" collapsible>
-  //               <AccordionItem value="item-1">
-  //                 <AccordionTrigger>宿舍分配规则</AccordionTrigger>
-  //                 <AccordionContent>
-  //                   请遵守学校的宿舍分配规定，不得私自调换宿舍。
-  //                 </AccordionContent>
-  //               </AccordionItem>
-  //               <AccordionItem value="item-2">
-  //                 <AccordionTrigger>宿舍卫生</AccordionTrigger>
-  //                 <AccordionContent>
-  //                   经常打扫宿舍卫生，保持宿舍环境整洁。
-  //                 </AccordionContent>
-  //               </AccordionItem>
-  //               <AccordionItem value="item-3">
-  //                 <AccordionTrigger>宿舍安全</AccordionTrigger>
-  //                 <AccordionContent>
-  //                   爱护公共财产，保障宿舍安全。
-  //                 </AccordionContent>
-  //               </AccordionItem>
-  //             </Accordion>
-  //           </div>
-  //         </CardContent>
-  //         <CardFooter>
-  //           <CardDescription>
-  //             选宿舍时间: 2022年9月1日至2022年9月5日
-  //           </CardDescription>
-  //         </CardFooter>
-  //       </Card>
-
-  //       <Alert>
-  //         <User className="h-4 w-4" />
-  //         <AlertTitle>Heads up!</AlertTitle>
-  //         <AlertDescription>
-  //           请仔细阅读宿舍选取注意事项，并按照要求进行选择。
-  //         </AlertDescription>
-  //       </Alert>
-  //     </main>
-  //   );
-  // }`);
-  // console.log(extractCode);
   return (
     <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll ">
       <ErrorBoundary
@@ -220,6 +168,8 @@ const CanvasArea = () => {
             CardContent,
             Label,
             Button,
+            Edit,
+            Trash,
             Input,
             RadioGroup,
             RadioGroupItem,
@@ -292,6 +242,28 @@ const CanvasArea = () => {
             AccordionTrigger,
             ScrollArea,
             Save,
+            Table,
+            TableBody,
+            TableCaption,
+            TableCell,
+            TableHeader,
+            TableHead,
+            TableRow,
+            Dialog,
+            DialogContent,
+            DialogDescription,
+            DialogHeader,
+            DialogTitle,
+            DialogTrigger,
+            AlertDialog,
+            AlertDialogAction,
+            AlertDialogCancel,
+            AlertDialogContent,
+            AlertDialogDescription,
+            AlertDialogFooter,
+            AlertDialogHeader,
+            AlertDialogTitle,
+            AlertDialogTrigger,
           }}
         >
           {`(props)=>{
@@ -322,7 +294,29 @@ const CanvasArea = () => {
             Accordion,
             AccordionContent,
             AccordionItem,
-            AccordionTrigger,ScrollArea,Save
+            AccordionTrigger,ScrollArea,Save,
+            Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHeader,
+  TableHead,
+  TableRow,Edit,Trash,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
           }=props;
          const {useState}=React;
          ${extractCode}
