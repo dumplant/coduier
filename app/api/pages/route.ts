@@ -7,7 +7,7 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
   try {
     const profile = await currentProfile();
-    const { name } = await req.json();
+    const { name, nameEN } = await req.json();
     const { searchParams } = new URL(req.url);
 
     const projectId = searchParams.get("projectId");
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
           create: {
             profileId: profile.id,
             name,
+            nameEN,
           },
         },
       },

@@ -31,6 +31,9 @@ const formSchema = z.object({
   name: z.string().min(1, {
     message: "必填",
   }),
+  nameEN: z.string().min(1, {
+    message: "必填",
+  }),
 });
 
 const CreatePageModal = () => {
@@ -43,6 +46,7 @@ const CreatePageModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      nameEN: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
@@ -90,6 +94,26 @@ const CreatePageModal = () => {
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
                       页面名称
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="请输入"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nameEN"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      页面英文名称
                     </FormLabel>
                     <FormControl>
                       <Input

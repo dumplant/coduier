@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     // 生成页面数组
-    const pages = (await generatePages(name, description)) as Array<string>;
+    const pages = await generatePages(name, description);
 
     // 在数据库中创建新的项目
     const project = await db.project.create({
@@ -35,7 +35,11 @@ export async function POST(req: Request) {
         // 创建页面
         pages: {
           create: pages.map((page) => {
-            return { name: page, profileId: profile.id };
+            return {
+              name: page.name,
+              nameEN: page.nameEN.toLocaleLowerCase().replace(/\s/g, "-"),
+              profileId: profile.id,
+            };
           }),
         },
         // 创建项目成员
@@ -62,16 +66,25 @@ export async function generatePages(projectName: string, description: string) {
           projectName +
           "with the description: " +
           description +
-          "For example, the output should put all the names in an array, like ['主页','关于我们','个人中心']",
+          "For example, the output should put all the names in an array, like [{'name':'主页', 'nameEN':'home'},{'name':'关于我们', 'nameEN':'about']",
       },
     ],
     model: "gpt-4",
   });
 
-  const pages =
-    (completion.choices[0].message.content || "['主页']")
-      .match(/'([^']*)'/g)
-      ?.map((page) => page.replace(/'/g, "")) || [];
+  interface Page {
+    name: string;
+    nameEN: string;
+  }
+
+  const pages: Page[] = (
+    completion.choices[0].message.content ||
+    "[{'name':'主页', 'nameEN':'home'}]"
+  )
+    .match(/\{.*?\}/g)
+    ?.map((page) => {
+      return JSON.parse(page.replace(/'/g, '"'));
+    }) || [{ name: "主页", nameEN: "home" }];
   console.log(completion.choices[0].message.content, pages);
   return pages;
 }
