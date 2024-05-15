@@ -23,7 +23,7 @@ export async function exportCode(projectId: string) {
     const code = await axios.get(`/api/messages?pageId=${page.id}`);
     console.log(code.data);
     // 在'app'文件夹下创建一个文件夹，文件夹的名称为页面的名称
-    const folder = appFolder?.folder(page.name);
+    const folder = appFolder?.folder(page.nameEN);
     // 在文件夹中创建一个名为page.tsx的文件，内容为页面的代码
     folder?.file("page.jsx", code.data[0]?.response);
   });
