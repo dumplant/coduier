@@ -72,7 +72,8 @@ model Page {
   id   String @id @default(uuid())
   name String
   nameEN String
-
+  code String @default("export default Empty = () => {return <div>暂无内容</div>}")
+ 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
