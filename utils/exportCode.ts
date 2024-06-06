@@ -3,9 +3,6 @@ import JSZip from "jszip";
 import { refineCode } from "./refineCode";
 
 export async function exportCode(projectId: string) {
-  refineCode(
-    `import { Button } from "invalid-path"; import { InvalidComponent } from "invalid-path"; import { useState } from "react";  export default function Example() {   const [count, setCount] = useState(0);   return (     <div>       <InvalidComponent></InvalidComponent>       <Button onClick={() => setCount(count + 1)}>{count}</Button>     </div>   ); }`
-  );
   // 获得项目的所有页面
   const pages = await axios.get(`/api/pages?projectId=${projectId}`);
   // 读取public目录下的zip文件资源my-next-app.zip
@@ -19,13 +16,12 @@ export async function exportCode(projectId: string) {
   const appFolder = loadedZip.folder("my-next-app")?.folder("app");
   // 遍历所有页面
   const pagePromises = pages.data.map(async (page: any) => {
-    // 获得页面的代码
-    const code = await axios.get(`/api/messages?pageId=${page.id}`);
-    console.log(code.data);
     // 在'app'文件夹下创建一个文件夹，文件夹的名称为页面的名称
-    const folder = appFolder?.folder(page.nameEN);
+    const folder = appFolder?.folder(
+      page.nameEN.toLocaleLowerCase().replace(/\s/g, "-")
+    );
     // 在文件夹中创建一个名为page.tsx的文件，内容为页面的代码
-    folder?.file("page.jsx", code.data[0]?.response);
+    folder?.file("page.jsx", page.code);
   });
 
   await Promise.all(pagePromises);

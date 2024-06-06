@@ -202,26 +202,6 @@ export const shadcnRules = [
     matcher: "^Resizable.*",
     source: "@/components/ui/resizable",
   },
-  {
-    matcher: "^ResponsiveBar",
-    source: "@nivo/bar",
-  },
-  {
-    matcher: "^ResponsiveLine",
-    source: "@nivo/line",
-  },
-  {
-    matcher: "^ResponsivePie",
-    source: "@nivo/pie",
-  },
-  {
-    matcher: "^ResponsiveScatterPlot",
-    source: "@nivo/scatterplot",
-  },
-  {
-    matcher: "^ResponsiveHeatMap",
-    source: "@nivo/heatmap",
-  },
 ];
 
 export const lucideIcons: Record<string, unknown> = {};
