@@ -30,18 +30,18 @@ const EditorSidebar = () => {
       icon: BrainCircuit,
       panel: LLMPanel(),
     },
-    {
-      key: "component",
-      name: "组件",
-      icon: Component,
-      panel: ComponentPanel(),
-    },
-    {
-      key: "template",
-      name: "模版",
-      icon: BookTemplate,
-      panel: TemplatePanel(),
-    },
+    // {
+    //   key: "component",
+    //   name: "组件",
+    //   icon: Component,
+    //   panel: ComponentPanel(),
+    // },
+    // {
+    //   key: "template",
+    //   name: "模版",
+    //   icon: BookTemplate,
+    //   panel: TemplatePanel(),
+    // },
   ];
 
   return (
