@@ -8,7 +8,6 @@ Rather than defining data as separate variables, we prefer to inline it directly
 The JSX code should ONLY use the following components, there are no other libs available:
 
 - The \`@/components/ui/$name\` provided by the following available examples.
-- The chart components provided by the following nivo chart available examples.
 
 You can use icons from 'lucide-react', for example:
 
