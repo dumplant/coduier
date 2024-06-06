@@ -7,14 +7,14 @@ import { Check, Copy, Download } from "lucide-react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useToast } from "@/components/ui/use-toast";
 
-const CodeArea = () => {
+const CodeArea = ({ pageCode }: { pageCode: string }) => {
   const { toast } = useToast();
   const { code, setCode } = useContext(CodeContext);
   const [highlightCode, setHighlightCode] = useState<string>("");
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
-    navigator.clipboard.writeText(code);
+    navigator.clipboard.writeText(pageCode);
     setCopied(true);
 
     setTimeout(() => {
@@ -23,7 +23,7 @@ const CodeArea = () => {
   };
 
   const handleDownload = () => {
-    const blob = new Blob([code], { type: "text/plain" });
+    const blob = new Blob([pageCode], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -36,7 +36,7 @@ const CodeArea = () => {
     setCDN("https://cdn.jsdelivr.net/npm/shiki");
     getHighlighter({ theme: "one-dark-pro", langs: ["jsx"] })
       .then((h) => {
-        const html = h.codeToHtml(code, {
+        const html = h.codeToHtml(pageCode, {
           lang: "jsx",
         });
         setHighlightCode(html);
@@ -47,9 +47,9 @@ const CodeArea = () => {
   }
 
   useEffect(() => {
-    if (!code) return;
+    if (!pageCode) return;
     setCodeHighlighter();
-  }, [code]);
+  }, [pageCode]);
 
   return (
     <ScrollArea className="relative w-[80%] h-[90%] border-8 border-gray-300 rounded-lg bg-[#282c34] p-2">

@@ -135,15 +135,15 @@ const DynamicComponentWithRef = dynamic(
   () => import("string-to-react-component"),
   { ssr: false }
 );
-const CanvasArea = () => {
+const CanvasArea = ({ pageCode }: { pageCode: string }) => {
   const { code, setCode, success, setSuccess } = useContext(CodeContext);
 
   const extractCode = useMemo(() => {
-    let refined = refineCode(code);
-    let result = extractLastBracesContent(refined);
+    // let refined = refineCode(pageCode);
+    let result = extractLastBracesContent(pageCode);
     setSuccess(true);
     return result;
-  }, [code]);
+  }, [pageCode, code]);
 
   return (
     <div className="w-[80%] h-[90%] border-8 border-gray-300 rounded-lg overflow-y-scroll ">
