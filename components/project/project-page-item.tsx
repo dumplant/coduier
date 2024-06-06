@@ -51,7 +51,7 @@ export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
       >
         {page.name}
       </p>
-      {role !== MemberRole.GUEST && (
+      {
         <div className="ml-auto flex items-center gap-x-2">
           <ActionTooltip label="Edit">
             <Edit
@@ -72,7 +72,7 @@ export const ProjectPageItem = ({ page, project, role }: ProjectPageProps) => {
             />
           </ActionTooltip>
         </div>
-      )}
+      }
     </button>
   );
 };
