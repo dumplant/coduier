@@ -14,22 +14,16 @@ const page = () => {
   const [showCanvas, setShowCanvas] = useState(true);
   const [messages, setMessages] = useState(null);
   const { code, setCode, success, setSuccess } = useContext(CodeContext);
-
+  const [pageCode, setPageCode] = useState<string>("");
   const { pageId } = useParams();
   useEffect(() => {
-    async function fetchData() {
-      const { data } = await axios.get(`/api/messages?pageId=${pageId}`);
-      if (data.length < 1) {
-        setMessages(
-          "export default Empty = () => {return <div>暂无内容</div>}"
-        );
-        setCode("export default Empty = () => {return <div>暂无内容</div>}");
-      } else {
-        setMessages(extractCodeBlock(data[0]?.response));
-        setCode(extractCodeBlock(data[0]?.response));
-      }
+    async function fetchCode() {
+      const { data } = await axios.get(`/api/pages/${pageId}`);
+      console.log("data", data);
+      setPageCode(data.code);
+      setCode(data.code);
     }
-    fetchData();
+    fetchCode();
   }, [pageId]);
 
   return (
@@ -50,7 +44,11 @@ const page = () => {
           )}
         </Button>
       </div>
-      {showCanvas ? <CanvasArea messages={messages} /> : <CodeArea />}
+      {showCanvas ? (
+        <CanvasArea pageCode={pageCode} />
+      ) : (
+        <CodeArea pageCode={pageCode} />
+      )}
     </div>
   );
 };

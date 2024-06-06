@@ -3,30 +3,28 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import CanvasArea from "@/components/showArea/canvas-area";
 import CodeArea from "@/components/showArea/code-area";
 import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/ui/loading";
 import { CodeContext } from "@/context/codeContext";
-import { MessageContext } from "@/context/messageContext";
 import { extractCodeBlock } from "@/utils/extract";
 import axios from "axios";
 import { Code, Computer, Laptop2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-const EditPage = () => {
+const page = () => {
   const [showCanvas, setShowCanvas] = useState(true);
   const [messages, setMessages] = useState(null);
-  const { code, setCode, isCodeLoading, setSuccess } = useContext(CodeContext);
-  const { message, setMessage } = useContext(MessageContext);
+  const { code, setCode, success, setSuccess } = useContext(CodeContext);
+  const [pageCode, setPageCode] = useState<string>("");
   const { pageId } = useParams();
   useEffect(() => {
-    async function fetchData() {
-      const { data } = await axios.get(`/api/messages?pageId=${pageId}`);
-      setMessages(data);
-      setMessage(data);
-      setCode(extractCodeBlock(data[0]?.response));
+    async function fetchCode() {
+      const { data } = await axios.get(`/api/pages/${pageId}`);
+      console.log("data", data);
+      setPageCode(data.code);
+      setCode(data.code);
     }
-    fetchData();
-  }, [pageId]);
+    fetchCode();
+  }, [pageId, code]);
 
   return (
     <div className="relative w-full h-full flex justify-center items-center">
@@ -46,15 +44,13 @@ const EditPage = () => {
           )}
         </Button>
       </div>
-      {isCodeLoading ? (
-        <LoadingSpinner />
-      ) : showCanvas ? (
-        <CanvasArea />
+      {showCanvas ? (
+        <CanvasArea pageCode={pageCode} />
       ) : (
-        <CodeArea />
+        <CodeArea pageCode={pageCode} />
       )}
     </div>
   );
 };
 
-export default EditPage;
+export default page;
